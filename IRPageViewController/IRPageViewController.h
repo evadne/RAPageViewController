@@ -14,7 +14,7 @@
 
 @interface IRPageViewController : UIViewController
 
-@property (nonatomic, readwrite, weak) id<IRPageViewControllerDelegate> delegate;
-@property (nonatomic, readwrite, strong) NSArray *viewControllers;
+@property (nonatomic, readwrite, weak) IBOutlet id<IRPageViewControllerDelegate> delegate;
+@property (nonatomic, readwrite, strong) IBOutletCollection(UIViewController) NSArray *viewControllers;
 
 @end
