@@ -16,6 +16,9 @@
 @synthesize currentPageViewController = _currentPageViewController;
 @synthesize previousPageViewController = _previousPageViewController;
 @synthesize nextPageViewController = _nextPageViewController;
+@synthesize currentPageViewContainer = _currentPageViewContainer;
+@synthesize previousPageViewContainer = _previousPageViewContainer;
+@synthesize nextPageViewContainer = _nextPageViewContainer;
 @synthesize tiled = _tiled;
 
 - (void) viewDidLoad {
@@ -41,6 +44,10 @@
 		
 		_scrollView.delegate = nil;
 		_scrollView = nil;
+		
+		_previousPageViewContainer = nil;
+		_currentPageViewContainer = nil;
+		_nextPageViewContainer = nil;
 		
 	}
 
@@ -264,7 +271,7 @@
 		[self addChildViewController:_previousPageViewController];
 		
 		if ([self isViewLoaded]) {
-			[self.scrollView addSubview:_previousPageViewController.view];
+			[self.previousPageViewContainer addSubview:_previousPageViewController.view];
 		}
 		
 		[_previousPageViewController didMoveToParentViewController:self];
@@ -288,7 +295,7 @@
 		[self addChildViewController:_currentPageViewController];
 		
 		if ([self isViewLoaded]) {
-			[self.scrollView addSubview:_currentPageViewController.view];
+			[self.currentPageViewContainer addSubview:_currentPageViewController.view];
 		}
 		
 		[_currentPageViewController didMoveToParentViewController:self];
@@ -312,7 +319,7 @@
 		[self addChildViewController:_nextPageViewController];
 		
 		if ([self isViewLoaded]) {
-			[self.scrollView addSubview:_nextPageViewController.view];
+			[self.nextPageViewContainer addSubview:_nextPageViewController.view];
 		}
 		
 		[_nextPageViewController didMoveToParentViewController:self];
@@ -347,6 +354,39 @@
 - (CGRect) viewRectForPageRect:(CGRect)rect {
 
 	return rect;
+
+}
+
+- (UIView *) previousPageViewContainer {
+
+	if (!_previousPageViewContainer)
+		_previousPageViewContainer = [self newPageViewContainer];
+	
+	return _previousPageViewContainer;
+
+}
+
+- (UIView *) currentPageViewContainer {
+
+	if (!_currentPageViewContainer)
+		_currentPageViewContainer = [self newPageViewContainer];
+	
+	return _currentPageViewContainer;
+
+}
+
+- (UIView *) nextPageViewContainer {
+
+	if (!_nextPageViewContainer)
+		_nextPageViewContainer = [self newPageViewContainer];
+	
+	return _nextPageViewContainer;
+
+}
+
+- (UIView *) newPageViewContainer {
+
+	return [[UIView alloc] initWithFrame:CGRectZero];
 
 }
 
@@ -442,13 +482,26 @@
 	NSCParameterAssert(previousPVCView != currentPVCView);
 	NSCParameterAssert(currentPVCView != nextPVCView);
 	
-	previousPVCView.frame = previousViewRect;
-	currentPVCView.frame = currentViewRect;
-	nextPVCView.frame = nextViewRect;
+	UIView * const previousPVCVContainer = self.previousPageViewContainer;
+	UIView * const currentPVCVContainer = self.currentPageViewContainer;
+	UIView * const nextPVCVContainer = self.nextPageViewContainer;
 	
-	[sv addSubview:previousPVCView];
-	[sv addSubview:currentPVCView];
-	[sv addSubview:nextPVCView];
+	previousPVCVContainer.frame = previousViewRect;
+	currentPVCVContainer.frame = currentViewRect;
+	nextPVCVContainer.frame = nextViewRect;
+	
+	previousPVCView.frame = previousPVCVContainer.bounds;
+	[previousPVCVContainer addSubview:previousPVCView];
+	
+	currentPVCView.frame = currentPVCVContainer.bounds;
+	[currentPVCVContainer addSubview:currentPVCView];
+	
+	nextPVCView.frame = nextPVCVContainer.bounds;
+	[nextPVCVContainer addSubview:nextPVCView];
+	
+	[sv addSubview:previousPVCVContainer];
+	[sv addSubview:currentPVCVContainer];
+	[sv addSubview:nextPVCVContainer];
 	
 	if (!CGPointEqualToPoint(sv.contentOffset, toContentOffset)) {
 		[sv setContentOffset:toContentOffset];
