@@ -52,6 +52,7 @@
 	if (!_scrollView) {
 	
 		_scrollView = [[IRPageViewControllerScrollView alloc] initWithFrame:self.view.bounds];
+		_scrollView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 		_scrollView.delegate = self;
 		_scrollView.pagingEnabled = YES;
 		_scrollView.alwaysBounceHorizontal = NO;
