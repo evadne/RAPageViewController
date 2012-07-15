@@ -279,21 +279,39 @@
 	
 	if (!self.tiled) {
 	
-		if (CGRectContainsPoint(previousPageRect, currentOffset)) {
+		CGPoint (^center)(CGRect) = ^ (CGRect rect) {
+			return (CGPoint){ CGRectGetMidX(rect), CGRectGetMidY(rect) };
+		};
 		
+		CGFloat (^distance)(CGPoint, CGPoint) = ^ (CGPoint lhs, CGPoint rhs) {
+			return sqrtf(powf(lhs.x - rhs.x, 2) + powf(lhs.y - rhs.y, 2));
+		};
+		
+		CGPoint const offsetCenter = (CGPoint) {
+			currentOffset.x + 0.5f * CGRectGetWidth(sv.frame),
+			currentOffset.y + 0.5f * CGRectGetHeight(sv.frame),
+		};
+		
+		CGFloat const previousCenterDistance = distance(offsetCenter, center(previousPageRect));
+		CGFloat const currentCenterDistance = distance(offsetCenter, center(currentPageRect));
+		CGFloat const nextCenterDistance = distance(offsetCenter, center(nextPageRect));
+		CGFloat const minDistance = MIN(MIN(previousCenterDistance, currentCenterDistance), nextCenterDistance);
+		
+		if (minDistance == currentCenterDistance) {
+		
+			//	no op
+		
+		} else if (minDistance == previousCenterDistance) {
+				
 			self.nextPageViewController = self.currentPageViewController;
 			self.currentPageViewController = self.previousPageViewController;
 			self.previousPageViewController = [self.delegate pageViewController:self viewControllerBeforeViewController:self.currentPageViewController];
 
-		} else if (CGRectContainsPoint(nextPageRect, currentOffset)) {
+		} else if (minDistance == nextCenterDistance) {
 		
 			self.previousPageViewController = self.currentPageViewController;
 			self.currentPageViewController = self.nextPageViewController;
 			self.nextPageViewController = [self.delegate pageViewController:self viewControllerAfterViewController:self.currentPageViewController];
-		
-		} else {
-		
-			//	No op
 		
 		}
 		
