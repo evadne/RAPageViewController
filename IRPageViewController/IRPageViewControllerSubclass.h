@@ -18,6 +18,12 @@
 @property (nonatomic, readwrite, strong) UIViewController *previousPageViewController;
 @property (nonatomic, readwrite, strong) UIViewController *nextPageViewController;
 
+@property (nonatomic, readonly, strong) UIView *currentPageViewContainer;
+@property (nonatomic, readonly, strong) UIView *previousPageViewContainer;
+@property (nonatomic, readonly, strong) UIView *nextPageViewContainer;
+
+- (UIView *) newPageViewContainer;	//	override for custom overlay
+
 - (CGRect) currentPageRect;
 - (CGRect) previousPageRect;
 - (CGRect) nextPageRect;
