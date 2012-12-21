@@ -27,7 +27,13 @@
 	[self.view addSubview:self.scrollView];
 	
 	self.tiled = NO;
-
+	if (self.viewControllers) {
+		[self.scrollView setContentOffset:(CGPoint){
+			CGRectGetMidX([self currentPageRect]),
+			CGRectGetMidY([self currentPageRect])
+		} animated:NO];
+	}
+	
 }
 
 - (void) setView:(UIView *)view {
@@ -70,24 +76,139 @@
 
 	[super viewDidLayoutSubviews];
 	
+	[self.scrollView setNeedsLayout];
+
+}
+
+- (void) pageViewControllerScrollViewDidLayoutSubviews:(IRPageViewControllerScrollView *)pvcSV {
+
 	[self tile];
 
 }
 
+//	- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
+//		
+//		if (scrollView.pagingEnabled)
+//			return;
+//		
+//		CGRect previousPageRect = [self previousPageRect];
+//		CGRect currentPageRect = [self currentPageRect];
+//		CGRect nextPageRect = [self nextPageRect];
+//		
+//		CGPoint previousPageRectCenter = (CGPoint){
+//			CGRectGetMidX(previousPageRect),
+//			CGRectGetMidY(previousPageRect)
+//		};
+//		CGPoint currentPageRectCenter = (CGPoint){
+//			CGRectGetMidX(currentPageRect),
+//			CGRectGetMidY(currentPageRect)
+//		};
+//		CGPoint nextPageRectCenter = (CGPoint){
+//			CGRectGetMidX(nextPageRect),
+//			CGRectGetMidY(nextPageRect)
+//		};
+//		
+//		CGPoint targetContentOffsetCenter = (CGPoint){
+//			(*targetContentOffset).x + 0.5f * CGRectGetWidth(scrollView.frame),
+//			(*targetContentOffset).y + 0.5f * CGRectGetHeight(scrollView.frame),
+//		};
+//		
+//		CGFloat previousPageRectCenterDistance = sqrtf(
+//			powf(previousPageRectCenter.x - targetContentOffsetCenter.x, 2) +
+//			powf(previousPageRectCenter.y - targetContentOffsetCenter.y, 2)
+//		);
+//		CGFloat currentPageRectCenterDistance = sqrtf(
+//			powf(currentPageRectCenter.x - targetContentOffsetCenter.x, 2) +
+//			powf(currentPageRectCenter.y - targetContentOffsetCenter.y, 2)
+//		);
+//		CGFloat nextPageRectCenterDistance = sqrtf(
+//			powf(nextPageRectCenter.x - targetContentOffsetCenter.x, 2) +
+//			powf(nextPageRectCenter.y - targetContentOffsetCenter.y, 2)
+//		);
+//		
+//		CGFloat minPageRectCenterDistance = MIN(MIN(previousPageRectCenterDistance, currentPageRectCenterDistance), nextPageRectCenterDistance);
+//		
+//		if (previousPageRectCenterDistance == minPageRectCenterDistance) {
+//
+//			*targetContentOffset = (CGPoint){
+//				previousPageRectCenter.x - 0.5f * CGRectGetWidth(scrollView.frame),
+//				previousPageRectCenter.y - 0.5f * CGRectGetHeight(scrollView.frame)
+//			};
+//		
+//		} else if (nextPageRectCenterDistance == minPageRectCenterDistance) {
+//			
+//			*targetContentOffset = (CGPoint){
+//				nextPageRectCenter.x - 0.5f * CGRectGetWidth(scrollView.frame),
+//				nextPageRectCenter.y - 0.5f * CGRectGetHeight(scrollView.frame)
+//			};
+//			
+//		} else {
+//		
+//			*targetContentOffset = (CGPoint){
+//				currentPageRectCenter.x - 0.5f * CGRectGetWidth(scrollView.frame),
+//				currentPageRectCenter.y - 0.5f * CGRectGetHeight(scrollView.frame)
+//			};
+//			
+//		}
+//
+//	}
+
 - (void) scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
 
 	if (!decelerate) {
-		self.tiled = NO;
-		[self tile];
+		[self.scrollView setNeedsLayout];
 	}
+	
+	[[self class] attemptRotationToDeviceOrientation];
 
 }
 
 - (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
 
-	self.tiled = NO;
-	[self tile];
-
+	[self.scrollView setNeedsLayout];
+	
+	//	[self.scrollView layoutSubviews];
+	//	
+	//	CGPoint contentOffset = self.scrollView.contentOffset;
+	//	
+	//	CGRect const previousPageRect = [self previousPageRect];
+	//	CGRect const currentPageRect = [self currentPageRect];
+	//	CGRect const nextPageRect = [self nextPageRect];
+	//	
+	//	CGPoint contentCenterPoint = (CGPoint){
+	//		contentOffset.x + 0.5f * CGRectGetWidth(self.scrollView.frame),
+	//		contentOffset.y + 0.5f * CGRectGetHeight(self.scrollView.frame)
+	//	};
+	//	
+	//	CGFloat previousPageCenterDistance = sqrtf(
+	//		powf(contentCenterPoint.x - CGRectGetMidX(previousPageRect), 2) +
+	//		powf(contentCenterPoint.y - CGRectGetMidY(previousPageRect), 2)
+	//	);
+	//	CGFloat currentPageCenterDistance = sqrtf(
+	//		powf(contentCenterPoint.x - CGRectGetMidX(currentPageRect), 2) +
+	//		powf(contentCenterPoint.y - CGRectGetMidY(currentPageRect), 2)
+	//	);
+	//	CGFloat nextPageCenterDistance = sqrtf(
+	//		powf(contentCenterPoint.x - CGRectGetMidX(nextPageRect), 2) +
+	//		powf(contentCenterPoint.y - CGRectGetMidY(nextPageRect), 2)
+	//	);
+	//	
+	//	CGFloat minPageCenterDistance = MIN(MIN(previousPageCenterDistance, currentPageCenterDistance), nextPageCenterDistance);
+	//	
+	//	if (previousPageCenterDistance == minPageCenterDistance) {
+	//		
+	//		[self.scrollView setContentOffset:previousPageRect.origin animated:YES];
+	//	
+	//	} else if (nextPageCenterDistance == minPageCenterDistance) {
+	//
+	//		[self.scrollView setContentOffset:nextPageRect.origin animated:YES];
+	//		
+	//	} else {
+	//	
+	//		[self.scrollView setContentOffset:currentPageRect.origin animated:YES];
+	//		
+	//	}
+	
 }
 
 - (CGRect) currentPageRect {
@@ -209,6 +330,9 @@
 
 - (void) setViewControllers:(NSArray *)viewControllers {
 
+	if (_viewControllers == viewControllers)
+		return;
+	
 	NSCParameterAssert([viewControllers count] <= 1);
 	
 	self.previousPageViewController = nil;
@@ -222,8 +346,8 @@
 	self.currentPageViewController = currentVC;
 	self.previousPageViewController = [self.delegate pageViewController:self viewControllerBeforeViewController:currentVC];
 	self.nextPageViewController = [self.delegate pageViewController:self viewControllerAfterViewController:currentVC];
-
-	[self tile];
+	
+	[self.scrollView setNeedsLayout];
 
 }
 
@@ -270,74 +394,101 @@
 
 	if (![self isViewLoaded])
 		return;
-	
+		
 	UIScrollView * const sv = self.scrollView;
+	CGPoint const fromContentOffset = sv.contentOffset;
 	
-	CGPoint const currentOffset = sv.contentOffset;
 	CGRect const previousPageRect = [self previousPageRect];
 	CGRect const currentPageRect = [self currentPageRect];
 	CGRect const nextPageRect = [self nextPageRect];
+
+	CGRect const previousViewRect = [self viewRectForPageRect:previousPageRect];
+	CGRect const currentViewRect = [self viewRectForPageRect:currentPageRect];
+	CGRect const nextViewRect = [self viewRectForPageRect:nextPageRect];
 	
-	if (!self.tiled) {
+	CGPoint toContentOffset = fromContentOffset;
 	
-		CGPoint (^center)(CGRect) = ^ (CGRect rect) {
-			return (CGPoint){ CGRectGetMidX(rect), CGRectGetMidY(rect) };
-		};
+	CGPoint contentCenterPoint = (CGPoint){
+		fromContentOffset.x + 0.5f * CGRectGetWidth(self.scrollView.frame),
+		fromContentOffset.y + 0.5f * CGRectGetHeight(self.scrollView.frame)
+	};
+	
+	CGFloat previousPageCenterDistance = sqrtf(
+		powf(contentCenterPoint.x - CGRectGetMidX(previousPageRect), 2) +
+		powf(contentCenterPoint.y - CGRectGetMidY(previousPageRect), 2)
+	);
+	CGFloat currentPageCenterDistance = sqrtf(
+		powf(contentCenterPoint.x - CGRectGetMidX(currentPageRect), 2) +
+		powf(contentCenterPoint.y - CGRectGetMidY(currentPageRect), 2)
+	);
+	CGFloat nextPageCenterDistance = sqrtf(
+		powf(contentCenterPoint.x - CGRectGetMidX(nextPageRect), 2) +
+		powf(contentCenterPoint.y - CGRectGetMidY(nextPageRect), 2)
+	);
+	
+	CGFloat minPageCenterDistance = MIN(MIN(previousPageCenterDistance, currentPageCenterDistance), nextPageCenterDistance);
+	
+	if (previousPageCenterDistance == minPageCenterDistance) {
+	
+		UIViewController *previousVC = [self.delegate pageViewController:self viewControllerBeforeViewController:self.previousPageViewController];
 		
-		CGFloat (^distance)(CGPoint, CGPoint) = ^ (CGPoint lhs, CGPoint rhs) {
-			return sqrtf(powf(lhs.x - rhs.x, 2) + powf(lhs.y - rhs.y, 2));
-		};
+		if (previousVC) {
 		
-		CGPoint const offsetCenter = (CGPoint) {
-			currentOffset.x + 0.5f * CGRectGetWidth(sv.frame),
-			currentOffset.y + 0.5f * CGRectGetHeight(sv.frame),
-		};
-		
-		CGFloat const previousCenterDistance = distance(offsetCenter, center(previousPageRect));
-		CGFloat const currentCenterDistance = distance(offsetCenter, center(currentPageRect));
-		CGFloat const nextCenterDistance = distance(offsetCenter, center(nextPageRect));
-		CGFloat const minDistance = MIN(MIN(previousCenterDistance, currentCenterDistance), nextCenterDistance);
-		
-		if (minDistance == currentCenterDistance) {
-		
-			//	no op
-		
-		} else if (minDistance == previousCenterDistance) {
-				
 			self.nextPageViewController = self.currentPageViewController;
 			self.currentPageViewController = self.previousPageViewController;
-			self.previousPageViewController = [self.delegate pageViewController:self viewControllerBeforeViewController:self.currentPageViewController];
-
-		} else if (minDistance == nextCenterDistance) {
+			self.previousPageViewController = previousVC;
+		
+			toContentOffset = (CGPoint){
+				fromContentOffset.x + (CGRectGetMidX(currentViewRect) - CGRectGetMidX(previousViewRect)),
+				fromContentOffset.y + (CGRectGetMidY(currentViewRect) - CGRectGetMidY(previousViewRect))
+			};
+			
+		}			
+	
+	} else if (nextPageCenterDistance == minPageCenterDistance) {
+	
+		UIViewController *nextVC = [self.delegate pageViewController:self viewControllerAfterViewController:self.nextPageViewController];
+		
+		if (nextVC) {
 		
 			self.previousPageViewController = self.currentPageViewController;
 			self.currentPageViewController = self.nextPageViewController;
-			self.nextPageViewController = [self.delegate pageViewController:self viewControllerAfterViewController:self.currentPageViewController];
+			self.nextPageViewController = nextVC;
+			
+			toContentOffset = (CGPoint){
+				fromContentOffset.x - (CGRectGetMidX(nextViewRect) - CGRectGetMidX(currentViewRect)),
+				fromContentOffset.y - (CGRectGetMidY(nextViewRect) - CGRectGetMidY(currentViewRect))
+			};
 		
 		}
 		
-		self.tiled = YES;
-	
 	}
-	
-	//	offset?  determine and swizzle
-	
+		
+	//	if (CGPointEqualToPoint(fromContentOffset, toContentOffset)) {
+	//		return;
+	//	}
 	
 	UIViewController * const previousPVC = self.previousPageViewController;
 	UIViewController * const currentPVC = self.currentPageViewController;
 	UIViewController * const nextPVC = self.nextPageViewController;
 	
+	NSCParameterAssert(previousPVC != currentPVC);
+	NSCParameterAssert(currentPVC != nextPVC);
+	
 	UIView * const previousPVCView = previousPVC.view;
 	UIView * const currentPVCView = currentPVC.view;
 	UIView * const nextPVCView = nextPVC.view;
+	
+	NSCParameterAssert(previousPVCView != currentPVCView);
+	NSCParameterAssert(currentPVCView != nextPVCView);
 	
 	UIView * const previousPVCVContainer = self.previousPageViewContainer;
 	UIView * const currentPVCVContainer = self.currentPageViewContainer;
 	UIView * const nextPVCVContainer = self.nextPageViewContainer;
 	
-	previousPVCVContainer.frame = [self viewRectForPageRect:previousPageRect];
-	currentPVCVContainer.frame = [self viewRectForPageRect:currentPageRect];
-	nextPVCVContainer.frame = [self viewRectForPageRect:nextPageRect];
+	previousPVCVContainer.frame = previousViewRect;
+	currentPVCVContainer.frame = currentViewRect;
+	nextPVCVContainer.frame = nextViewRect;
 	
 	previousPVCView.frame = previousPVCVContainer.bounds;
 	[previousPVCVContainer addSubview:previousPVCView];
@@ -352,11 +503,14 @@
 	[sv addSubview:currentPVCVContainer];
 	[sv addSubview:nextPVCVContainer];
 	
-	CGPoint currentPageOrigin = (CGPoint){ CGRectGetMinX(currentPageRect), CGRectGetMinY(currentPageRect) };
-	CGRect contentRect = CGRectUnion(CGRectUnion(CGRectUnion(CGRectZero, previousPageRect), currentPageRect), nextPageRect);
+	if (!CGPointEqualToPoint(sv.contentOffset, toContentOffset)) {
+		[sv setContentOffset:toContentOffset];
+	}
 	
-	[sv setContentOffset:currentPageOrigin animated:NO];
-	[sv setContentSize:contentRect.size];
+	CGRect contentRect = CGRectUnion(CGRectUnion(CGRectUnion(CGRectZero, previousPageRect), currentPageRect), nextPageRect);
+	if (!CGSizeEqualToSize(sv.contentSize, contentRect.size)) {
+		[sv setContentSize:contentRect.size];
+	}
 	
 	UIEdgeInsets contentInset = (UIEdgeInsets){
 		-1.0f * (previousPVCView ? 0.0f : CGRectGetMinY(currentPageRect)),
@@ -365,7 +519,23 @@
 		-1.0f * (nextPVCView ? 0.0f : (CGRectGetWidth(contentRect) - CGRectGetMaxX(currentPageRect))),
 	};
 	
-	[sv setContentInset:contentInset];
+	if (!UIEdgeInsetsEqualToEdgeInsets(sv.contentInset, contentInset)) {
+		[sv setContentInset:contentInset];
+	}
+	
+}
+
+- (BOOL) shouldAutorotate {
+
+	return !self.scrollView.tracking;
+
+}
+
+- (void) willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
+
+	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
+	
+	[self.scrollView setContentOffset:[self currentPageRect].origin];
 
 }
 
