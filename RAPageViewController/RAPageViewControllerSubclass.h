@@ -1,18 +1,18 @@
 //
-//  IRPageViewController_Sub.h
-//  IRPageViewController
+//  RAPageViewController_Sub.h
+//  RAPageViewController
 //
 //  Created by Evadne Wu on 7/15/12.
-//  Copyright (c) 2012 Iridia Productions. All rights reserved.
+//  Copyright (c) 2012 Radius. All rights reserved.
 //
 
-#import "IRPageViewController.h"
-#import "IRPageViewControllerScrollView.h"
-#import "IRPageViewControllerScrollViewDelegate.h"
+#import "RAPageViewController.h"
+#import "RAPageViewControllerScrollView.h"
+#import "RAPageViewControllerScrollViewDelegate.h"
 
-@interface IRPageViewController () <IRPageViewControllerScrollViewDelegate>
+@interface RAPageViewController () <RAPageViewControllerScrollViewDelegate>
 
-@property (nonatomic, readonly, strong) IRPageViewControllerScrollView *scrollView;
+@property (nonatomic, readonly, strong) RAPageViewControllerScrollView *scrollView;
 
 @property (nonatomic, readwrite, strong) UIViewController *currentPageViewController;
 @property (nonatomic, readwrite, strong) UIViewController *previousPageViewController;
@@ -29,8 +29,5 @@
 - (CGRect) nextPageRect;
 
 - (CGRect) viewRectForPageRect:(CGRect)rect;
-
-@property (nonatomic, readwrite, assign) BOOL tiled;	//	FIXME
-- (void) tile;	//	FIXME
 
 @end
