@@ -462,7 +462,7 @@
 
 - (BOOL) shouldAutorotate {
 
-	return !self.scrollView.tracking;
+	return !self.scrollView.tracking && !self.scrollView.decelerating;
 
 }
 
