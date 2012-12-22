@@ -152,15 +152,21 @@
 	UIViewController * const currentPVC = self.currentPageViewController;
 	UIViewController * const nextPVC = self.nextPageViewController;
 	
-	NSCParameterAssert(previousPVC != currentPVC);
-	NSCParameterAssert(currentPVC != nextPVC);
+	if (!!previousPVC && !!currentPVC)
+		NSCParameterAssert(previousPVC != currentPVC);
+	
+	if (!!currentPVC && !!nextPVC)
+		NSCParameterAssert(currentPVC != nextPVC);
 	
 	UIView * const previousPVCView = previousPVC.view;
 	UIView * const currentPVCView = currentPVC.view;
 	UIView * const nextPVCView = nextPVC.view;
 	
-	NSCParameterAssert(previousPVCView != currentPVCView);
-	NSCParameterAssert(currentPVCView != nextPVCView);
+	if (!!previousPVCView && !!currentPVCView)
+		NSCParameterAssert(previousPVCView != currentPVCView);
+	
+	if (!!currentPVCView && !!nextPVCView)
+		NSCParameterAssert(currentPVCView != nextPVCView);
 	
 	UIView * const previousPVCVContainer = self.previousPageViewContainer;
 	UIView * const currentPVCVContainer = self.currentPageViewContainer;
@@ -496,6 +502,19 @@
 	
 }
 
+- (void) scrollToLastVisibleViewController {
+
+	UIViewController *lastVisibleViewController = self.lastVisibleViewController;
+	if (lastVisibleViewController == self.previousPageViewController) {
+		[self.scrollView setContentOffset:[self previousPageRect].origin];
+	} else if (lastVisibleViewController == self.nextPageViewController) {
+		[self.scrollView setContentOffset:[self nextPageRect].origin];
+	} else {
+		[self.scrollView setContentOffset:[self currentPageRect].origin];
+	}
+
+}
+
 - (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
 
 	[super willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
@@ -508,14 +527,22 @@
 
 	[super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
 	
-	UIViewController *lastVisibleViewController = self.lastVisibleViewController;
-	if (lastVisibleViewController == self.previousPageViewController) {
-		[self.scrollView setContentOffset:[self previousPageRect].origin];
-	} else if (lastVisibleViewController == self.nextPageViewController) {
-		[self.scrollView setContentOffset:[self nextPageRect].origin];
-	} else {
-		[self.scrollView setContentOffset:[self currentPageRect].origin];
-	}
+	[self scrollToLastVisibleViewController];
+	
+}
+
+- (void) pageViewControllerScrollViewWillChangeFromFrame:(CGRect)fromFrame toFrame:(CGRect)toFrame {
+	
+	[self updateLastVisibleViewController];
+
+}
+
+- (void) pageViewControllerScrollViewDidChangeFromFrame:(CGRect)fromFrame toFrame:(CGRect)toFrame {
+
+	[self.scrollView setNeedsLayout];
+	[self.scrollView layoutSubviews];
+	
+	[self scrollToLastVisibleViewController];
 
 }
 

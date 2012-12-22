@@ -12,6 +12,8 @@
 @protocol RAPageViewControllerScrollViewDelegate <UIScrollViewDelegate>
 
 @optional
+- (void) pageViewControllerScrollViewWillChangeFromFrame:(CGRect)fromFrame toFrame:(CGRect)toFrame;
+- (void) pageViewControllerScrollViewDidChangeFromFrame:(CGRect)fromFrame toFrame:(CGRect)toFrame;
 - (void) pageViewControllerScrollViewWillLayoutSubviews:(RAPageViewControllerScrollView *)pvcSV;
 - (void) pageViewControllerScrollViewDidLayoutSubviews:(RAPageViewControllerScrollView *)pvcSV;
 

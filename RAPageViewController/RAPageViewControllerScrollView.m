@@ -11,6 +11,21 @@
 @implementation RAPageViewControllerScrollView
 @dynamic delegate;
 
+- (void) setFrame:(CGRect)frame {
+
+	CGRect fromFrame = self.frame;
+	CGRect toFrame = frame;
+	
+	if ([self.delegate respondsToSelector:@selector(pageViewControllerScrollViewDidChangeFromFrame:toFrame:)])
+		[self.delegate pageViewControllerScrollViewWillChangeFromFrame:fromFrame toFrame:toFrame];
+
+	[super setFrame:frame];
+	
+	if ([self.delegate respondsToSelector:@selector(pageViewControllerScrollViewDidChangeFromFrame:toFrame:)])
+		[self.delegate pageViewControllerScrollViewDidChangeFromFrame:fromFrame toFrame:self.frame];
+
+}
+
 - (void) layoutSubviews {
 
 	if ([self.delegate respondsToSelector:@selector(pageViewControllerScrollViewWillLayoutSubviews:)])
