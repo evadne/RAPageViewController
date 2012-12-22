@@ -453,7 +453,10 @@
 
 - (UIView *) newPageViewContainer {
 
-	return [[UIView alloc] initWithFrame:CGRectZero];
+	UIView *container = [[UIView alloc] initWithFrame:CGRectZero];
+	container.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+	
+	return container;
 
 }
 
