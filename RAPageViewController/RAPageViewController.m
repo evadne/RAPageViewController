@@ -86,7 +86,7 @@
 
 	if (![self isViewLoaded])
 		return;
-		
+	
 	UIScrollView * const sv = self.scrollView;
 	CGPoint const fromContentOffset = sv.contentOffset;
 	
@@ -505,14 +505,23 @@
 - (void) scrollToLastVisibleViewController {
 
 	UIViewController *lastVisibleViewController = self.lastVisibleViewController;
+	if (!lastVisibleViewController)
+		return;
+	
+	if (self.previousPageViewController)
 	if (lastVisibleViewController == self.previousPageViewController) {
 		[self.scrollView setContentOffset:[self previousPageRect].origin];
-	} else if (lastVisibleViewController == self.nextPageViewController) {
-		[self.scrollView setContentOffset:[self nextPageRect].origin];
-	} else {
-		[self.scrollView setContentOffset:[self currentPageRect].origin];
+		return;
 	}
-
+	
+	if (self.nextPageViewController)
+	if (lastVisibleViewController == self.nextPageViewController) {
+		[self.scrollView setContentOffset:[self nextPageRect].origin];
+		return;
+	}
+	
+	[self.scrollView setContentOffset:[self currentPageRect].origin];
+	
 }
 
 - (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration {
@@ -543,7 +552,7 @@
 	[self.scrollView layoutSubviews];
 	
 	[self scrollToLastVisibleViewController];
-
+	
 }
 
 @end
