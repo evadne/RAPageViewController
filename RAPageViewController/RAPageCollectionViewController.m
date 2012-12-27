@@ -113,7 +113,6 @@
 		_collectionViewLayout = [RAPageCollectionViewFlowLayout new];
 		_collectionViewLayout.minimumLineSpacing = 16.0f;
 		_collectionViewLayout.minimumInteritemSpacing = 16.0f;
-//		_collectionViewLayout.itemSize = self.view.bounds.size;
 		_collectionViewLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
 		_collectionViewLayout.headerReferenceSize = (CGSize){ 8, 8 };
 		_collectionViewLayout.footerReferenceSize = (CGSize){ 8, 8 };
