@@ -12,10 +12,12 @@
 #import "RAPageCollectionViewController.h"
 #import "RAPageCollectionViewFlowLayout.h"
 #import "RAPageCollectionViewSpacer.h"
+#import "RADeferredOperation.h"
 
 @interface RAPageCollectionViewController () <RAPageCollectionViewCellDelegate, RAPageCollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, readwrite, strong) NSIndexPath *lastIndexPath;
+@property (nonatomic, readonly, strong) NSOperationQueue *animationQueue;
 
 @end
 
@@ -23,6 +25,7 @@
 @synthesize collectionView = _collectionView;
 @synthesize collectionViewLayout = _collectionViewLayout;
 @synthesize lastIndexPath = _lastIndexPath;
+@synthesize animationQueue = _animationQueue;
 
 - (void) viewDidLoad {
 	
@@ -53,9 +56,12 @@
 	
 	cell.backgroundColor = [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:0.5f + 0.5f * ((float)indexPath.item / 256.0f)];
 	
+	UIViewController *viewController = [self.delegate viewControllerForPageAtIndex:indexPath.item inPageCollectionViewController:self];
+	
 	cell.delegate = self;
 	cell.parentViewController = self;
-	cell.childViewController = [self.delegate viewControllerForPageAtIndex:indexPath.item inPageCollectionViewController:self];
+	
+	cell.childViewController = ([viewController isViewLoaded] && (viewController.view.superview == self.view)) ? nil : viewController;
 	
 	cell.layer.borderColor = [UIColor redColor].CGColor;
 	cell.layer.borderWidth = 2.0f;
@@ -176,7 +182,10 @@
 }
 
 - (void) pageCollectionView:(RAPageCollectionView *)pageCollectionView didChangeFromFrame:(CGRect)fromBounds toFrame:(CGRect)toBounds {
-
+	
+	if (isnan(self.displayIndex))
+		return;
+	
 	CALayer *referenceLayer = self.view.layer;
 	CABasicAnimation *positionAnimation = (CABasicAnimation *)[referenceLayer animationForKey:@"position"];
 	CABasicAnimation *boundsAnimation = (CABasicAnimation *)[referenceLayer animationForKey:@"bounds"];
@@ -185,9 +194,10 @@
 		return;
 	
 	NSTimeInterval duration = boundsAnimation.duration;
-	UIViewAnimationOptions options = UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionOverrideInheritedDuration;
+	UIViewAnimationOptions options = UIViewAnimationOptionAllowUserInteraction|UIViewAnimationOptionBeginFromCurrentState;
 	
-	UIViewController *viewController = [self.delegate viewControllerForPageAtIndex:self.lastIndexPath.item inPageCollectionViewController:self];
+	NSUInteger lastIndex = (NSUInteger)roundf(self.displayIndex);
+	UIViewController *viewController = [self.delegate viewControllerForPageAtIndex:lastIndex inPageCollectionViewController:self];
 	
 	if (viewController.parentViewController != self) {
 		[self addChildViewController:viewController];
@@ -205,7 +215,12 @@
 		CGRectGetMidY(fromLayerBounds)
 	};
 	
-	dispatch_async(dispatch_get_main_queue(), ^{
+	NSOperation *animationOperation = [[RADeferredOperation alloc] initWithWorkerBlock:^(RADeferredOperation *operation, RADeferredOperationCompletionBlock completionBlock) {
+		
+		if ([operation isCancelled]) {
+			completionBlock();
+			return;
+		}
 		
 		[viewController.view.layer removeAllAnimations];
 		
@@ -215,75 +230,121 @@
 				
 		[viewController.view.layer removeAllAnimations];
 		
+		self.collectionView.hidden = YES;
+		
 		[UIView animateWithDuration:duration delay:0.0f options:options animations:^{
 			
 			viewController.view.frame = self.view.bounds;
-						
+			[self.view addSubview:viewController.view];
 			NSCParameterAssert(viewController.view.superview == self.view);
 			
 		} completion:^(BOOL finished) {
 			
+			[self.view addSubview:viewController.view];
+			NSCParameterAssert(viewController.view.superview == self.view);
+			
 			viewController.view.transform = CGAffineTransformIdentity;
+			self.collectionView.hidden = NO;
 			
 			[viewController willMoveToParentViewController:nil];
 			[viewController.view removeFromSuperview];
 			[viewController removeFromParentViewController];
 			
-			[self exhaustLastCentermostElement];
+			if (!finished || [operation isCancelled]) {
+				completionBlock();
+				return;
+			}
 			
-			RAPageCollectionViewCell *cell = (RAPageCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:self.lastIndexPath];
+			[self setDisplayIndex:lastIndex animated:NO completion:nil];
+			
+			RAPageCollectionViewCell *cell = (RAPageCollectionViewCell *)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:lastIndex inSection:0]];
 			
 			cell.parentViewController = self;
 			cell.childViewController = viewController;
 			[cell setNeedsLayout];
 			
+			NSCParameterAssert(![operation isCancelled]);
+			completionBlock();
+							
 		}];
+
+	}];
 	
-	});
-		
+	for (NSOperation *operation in self.animationQueue.operations)
+		[animationOperation addDependency:operation];
+	
+	[self.animationQueue cancelAllOperations];
+	[self.animationQueue addOperation:animationOperation];
+	
 }
 
-- (void) pageCollectionViewWillLayout:(RAPageCollectionView *)pageCollectionView {
+- (void) pageCollectionViewDidLayout:(RAPageCollectionView *)pageCollectionView {
 
 	//	no op
 
 }
 
-- (void) pageCollectionViewDidLayout:(RAPageCollectionView *)pageCollectionView {
+- (void) pageCollectionViewWillLayout:(RAPageCollectionView *)pageCollectionView {
 
+	//	no op
+	
+}
+
+- (CGFloat) displayIndexFromCurrentState {
+
+	UICollectionView *pageCollectionView = self.collectionView;
 	UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)pageCollectionView.collectionViewLayout;
 	UICollectionViewLayoutAttributes *element = [self centermostElementAttributesInRect:pageCollectionView.bounds];
 	
 	if (!element) {
 		
-		[self willChangeValueForKey:@"displayIndex"];
-		_displayIndex = NAN;
-		[self didChangeValueForKey:@"displayIndex"];
+		return NAN;
 		
 	} else {
 	
-		CGFloat pageBreadth = [self pageSpacing] + element.size.width;
+		CGPoint contentOffset = pageCollectionView.contentOffset;
+		
+		CALayer *presentationLayer = [pageCollectionView.layer presentationLayer];
+		CGRect presentationBounds = presentationLayer.bounds;
+		
 		CGPoint elementCenter = element.center;
-			
-		CGFloat offset = 0.0f;
+		CGFloat offset = (CGFloat)element.indexPath.item;
 		
 		switch (flowLayout.scrollDirection) {
 			
 			case UICollectionViewScrollDirectionHorizontal: {
-				offset = ((pageCollectionView.contentOffset.x + 0.5f * CGRectGetWidth(pageCollectionView.bounds)) - elementCenter.x) / pageBreadth;
-				break;
+				
+				CGFloat pageBreadth = [self pageSpacing] + element.size.width;
+				CGFloat containerBreadth = CGRectGetWidth(presentationBounds);
+				CGFloat containerCenterOffset = contentOffset.x + 0.5f * containerBreadth;
+				CGFloat elementCenterOffset = elementCenter.x;
+				
+				return offset + (containerCenterOffset - elementCenterOffset) / pageBreadth;
+				
 			}
 			
 			case UICollectionViewScrollDirectionVertical: {
-				offset = ((pageCollectionView.contentOffset.y + 0.5f * CGRectGetHeight(pageCollectionView.bounds)) - elementCenter.y) / pageBreadth;
-				break;
+				
+				CGFloat pageBreadth = [self pageSpacing] + element.size.height;
+				CGFloat containerBreadth = CGRectGetHeight(presentationBounds);
+				CGFloat containerCenterOffset = contentOffset.y + 0.5f * containerBreadth;
+				CGFloat elementCenterOffset = elementCenter.y;
+				
+				return offset + (containerCenterOffset - elementCenterOffset) / pageBreadth;
+				
 			}
 			
 		}
-		
-		[self willChangeValueForKey:@"displayIndex"];
-		_displayIndex = offset + (CGFloat)element.indexPath.item;
-		[self didChangeValueForKey:@"displayIndex"];
+	
+	}
+
+}
+
+- (void) scrollViewDidScroll:(UIScrollView *)scrollView {
+
+	if ([scrollView isTracking] || [scrollView isDecelerating]) {
+	
+		[self captureDisplayIndex];
 	
 	}
 
@@ -294,11 +355,14 @@
 	if (!decelerate)
 		[self captureLastIndexPath];
 
+	[self captureDisplayIndex];
+	
 }
 
 - (void) scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
 
 	[self captureLastIndexPath];
+	[self captureDisplayIndex];
 
 }
 
@@ -306,6 +370,14 @@
 
 	self.lastIndexPath = [self centermostElementAttributesInRect:self.collectionView.bounds].indexPath;
 	
+}
+
+- (void) captureDisplayIndex {
+
+	[self willChangeValueForKey:@"displayIndex"];
+	_displayIndex = [self displayIndexFromCurrentState];
+	[self didChangeValueForKey:@"displayIndex"];
+
 }
 
 - (void) setDisplayIndex:(CGFloat)displayIndex {
@@ -316,15 +388,6 @@
 
 - (void) setDisplayIndex:(CGFloat)displayIndex animated:(BOOL)animate completion:(void(^)(void))completionBlock {
 
-	if (_displayIndex == displayIndex) {
-		if (completionBlock)
-			completionBlock();
-		return;
-	}
-	
-	NSUInteger numberOfItems = [self.collectionView numberOfItemsInSection:0];
-	NSCParameterAssert(displayIndex < numberOfItems);
-	
 	CGPoint toContentOffset = CGPointZero;
 	CGFloat pageBreadth = NAN;
 	
@@ -345,9 +408,11 @@
 		
 	}
 	
-	[self willChangeValueForKey:@"displayIndex"];
-	_displayIndex = displayIndex;
-	[self didChangeValueForKey:@"displayIndex"];
+	if (_displayIndex != displayIndex) {
+		[self willChangeValueForKey:@"displayIndex"];
+		_displayIndex = displayIndex;
+		[self didChangeValueForKey:@"displayIndex"];
+	}
 	
 	if (animate) {
 
@@ -397,6 +462,9 @@
 	
 	}
 	
+	if (cell.childViewController.view.superview == self.view)
+		return NO;
+	
 	return YES;
 
 }
@@ -404,6 +472,19 @@
 - (BOOL) pageCollectionViewCell:(RAPageCollectionViewCell *)cell shouldChangeChildViewFromFrame:(CGRect)fromFrame toFrame:(CGRect)toFrame {
 
 	return YES;
+
+}
+
+- (NSOperationQueue *) animationQueue {
+
+	if (!_animationQueue) {
+	
+		_animationQueue = [[NSOperationQueue alloc] init];
+		_animationQueue.maxConcurrentOperationCount = 1;
+	
+	}
+	
+	return _animationQueue;
 
 }
 
