@@ -42,4 +42,37 @@
 
 }
 
+- (CGPoint) targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity {
+
+	if (CGPointEqualToPoint(CGPointZero, velocity))
+		return proposedContentOffset;
+	
+	switch (self.scrollDirection) {
+		
+		case UICollectionViewScrollDirectionHorizontal: {
+		
+			CGFloat pageWidth = (self.minimumLineSpacing + self.itemSize.width);
+			
+			return (CGPoint){
+				roundf(proposedContentOffset.x / pageWidth) * pageWidth,
+				proposedContentOffset.y
+			};
+		
+		}
+		
+		case UICollectionViewScrollDirectionVertical: {
+		
+			CGFloat pageHeight = (self.minimumLineSpacing + self.itemSize.height);
+			
+			return (CGPoint){
+				proposedContentOffset.x,
+				roundf(proposedContentOffset.y / pageHeight) * pageHeight
+			};
+		
+		}
+	
+	}
+
+}
+
 @end

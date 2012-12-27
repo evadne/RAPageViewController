@@ -136,21 +136,6 @@
 
 }
 
-- (void) scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset {
-
-	if (scrollView != self.collectionView)
-		return;
-		
-	if (CGPointEqualToPoint(CGPointZero, velocity))
-		return;
-	
-	*targetContentOffset = [self centermostElementAttributesInRect:(CGRect){
-		*targetContentOffset,
-		self.collectionView.bounds.size
-	}].frame.origin;
-
-}
-
 - (UICollectionViewLayoutAttributes *) centermostElementAttributesInRect:(CGRect)rect {
 	
 	CGPoint visualCenter = (CGPoint){
@@ -215,8 +200,14 @@
 	[self.view addSubview:overlayView];
 	[self.view addSubview:viewController.view];
 	
-	CGPoint fromLayerPosition = [referenceLayer convertPoint:[[positionAnimation fromValue] CGPointValue] fromLayer:referenceLayer.superlayer];
-	CGRect fromLayerBounds = [referenceLayer convertRect:[[boundsAnimation fromValue] CGRectValue] fromLayer:referenceLayer.superlayer];
+	CGRect fromLayerBounds = (CGRect){
+		CGPointZero,
+		[[boundsAnimation fromValue] CGRectValue].size
+	};
+	CGPoint fromLayerPosition = (CGPoint){
+		CGRectGetMidX(fromLayerBounds),
+		CGRectGetMidY(fromLayerBounds)
+	};
 	
 	dispatch_async(dispatch_get_main_queue(), ^{
 		
