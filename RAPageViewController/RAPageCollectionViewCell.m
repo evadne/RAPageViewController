@@ -25,8 +25,9 @@
 	[_childViewController removeFromParentViewController];
 	
 	if ([_childViewController isViewLoaded])
-	if ([_childViewController.view isDescendantOfView:self])
+	if ([_childViewController.view isDescendantOfView:self]) {
 		[_childViewController.view removeFromSuperview];
+	}
 	
 	_parentViewController = parentViewController;
 	
@@ -48,8 +49,9 @@
 	[_childViewController removeFromParentViewController];
 	
 	if ([_childViewController isViewLoaded])
-	if ([_childViewController.view isDescendantOfView:self])
+	if ([_childViewController.view isDescendantOfView:self]) {
 		[_childViewController.view removeFromSuperview];
+	}
 	
 	if ([childViewController.view.superview isKindOfClass:[self class]]) {
 		typeof(self) otherCell = (typeof(self))childViewController.view.superview;
