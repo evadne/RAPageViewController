@@ -194,10 +194,6 @@
 		[viewController didMoveToParentViewController:self];
 	}
 	
-	UIView *overlayView = [[UIView alloc] initWithFrame:self.view.bounds];
-	overlayView.backgroundColor = [UIColor blackColor];
-	
-	[self.view addSubview:overlayView];
 	[self.view addSubview:viewController.view];
 	
 	CGRect fromLayerBounds = (CGRect){
@@ -217,19 +213,13 @@
 		viewController.view.layer.bounds = fromLayerBounds;
 		viewController.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
 				
-		overlayView.layer.position = fromLayerPosition;
-		overlayView.layer.bounds = fromLayerBounds;
-		overlayView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-		
 		[viewController.view.layer removeAllAnimations];
 		
 		[UIView animateWithDuration:duration delay:0.0f options:options animations:^{
 			
 			viewController.view.frame = self.view.bounds;
-			overlayView.frame = self.view.bounds;
-			
+						
 			NSCParameterAssert(viewController.view.superview == self.view);
-			NSCParameterAssert(overlayView.superview == self.view);
 			
 		} completion:^(BOOL finished) {
 			
@@ -238,8 +228,6 @@
 			[viewController willMoveToParentViewController:nil];
 			[viewController.view removeFromSuperview];
 			[viewController removeFromParentViewController];
-			
-			[overlayView removeFromSuperview];
 			
 			[self exhaustLastCentermostElement];
 			
