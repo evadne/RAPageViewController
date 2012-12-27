@@ -43,6 +43,7 @@
 		FF1F70A5168999BB008F1BCC /* RAPageCollectionViewSpacer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RAPageCollectionViewSpacer.m; path = RAPageViewController/RAPageCollectionViewSpacer.m; sourceTree = "<group>"; };
 		FF1F70A716899C57008F1BCC /* RAPageCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAPageCollectionViewFlowLayout.h; path = RAPageViewController/RAPageCollectionViewFlowLayout.h; sourceTree = "<group>"; };
 		FF1F70A816899C57008F1BCC /* RAPageCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RAPageCollectionViewFlowLayout.m; path = RAPageViewController/RAPageCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		FF217F95168C318000F3883B /* RAPageCollectionViewCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RAPageCollectionViewCellDelegate.h; path = RAPageViewController/RAPageCollectionViewCellDelegate.h; sourceTree = "<group>"; };
 		FF5609CE1689C3FE008329B2 /* RAPageCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAPageCollectionView.h; path = RAPageViewController/RAPageCollectionView.h; sourceTree = "<group>"; };
 		FF5609CF1689C3FE008329B2 /* RAPageCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RAPageCollectionView.m; path = RAPageViewController/RAPageCollectionView.m; sourceTree = "<group>"; };
 		FF5609D11689C91D008329B2 /* RAPageCollectionViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RAPageCollectionViewDelegate.h; path = RAPageViewController/RAPageCollectionViewDelegate.h; sourceTree = "<group>"; };
@@ -92,6 +93,7 @@
 				FF5609D11689C91D008329B2 /* RAPageCollectionViewDelegate.h */,
 				FF1F70A01689918B008F1BCC /* RAPageCollectionViewCell.h */,
 				FF1F70A11689918B008F1BCC /* RAPageCollectionViewCell.m */,
+				FF217F95168C318000F3883B /* RAPageCollectionViewCellDelegate.h */,
 				FF1F70A4168999BB008F1BCC /* RAPageCollectionViewSpacer.h */,
 				FF1F70A5168999BB008F1BCC /* RAPageCollectionViewSpacer.m */,
 				FF1F70A716899C57008F1BCC /* RAPageCollectionViewFlowLayout.h */,

@@ -47,9 +47,9 @@
 	[_childViewController willMoveToParentViewController:nil];
 	[_childViewController removeFromParentViewController];
 	
-	if ([_childViewController isViewLoaded]) {
+	if ([_childViewController isViewLoaded])
+	if ([_childViewController.view isDescendantOfView:self])
 		[_childViewController.view removeFromSuperview];
-	}
 	
 	if ([childViewController.view.superview isKindOfClass:[self class]]) {
 		typeof(self) otherCell = (typeof(self))childViewController.view.superview;
@@ -74,10 +74,21 @@
 	UIViewController *childVC = self.childViewController;
 		
 	if (![childVC.view isDescendantOfView:self]) {
-		[self addSubview:childVC.view];
+	
+		if (!self.delegate || [self.delegate pageCollectionViewCell:self shouldMoveChildViewFromView:childVC.view.superview toView:self]) {
+		
+			[self addSubview:childVC.view];
+			
+		}
+		
 	}
 	
-	childVC.view.frame = self.bounds;
+	if (!self.delegate || [self.delegate pageCollectionViewCell:self shouldChangeChildViewFromFrame:childVC.view.frame toFrame:self.bounds]) {
+	
+		NSCParameterAssert(!CGRectEqualToRect(CGRectZero, self.bounds));
+		childVC.view.frame = self.bounds;
+	
+	}
 
 }
 

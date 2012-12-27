@@ -7,8 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RAPageCollectionViewCellDelegate.h"
 
 @interface RAPageCollectionViewCell : UICollectionViewCell
+
+@property (nonatomic, readwrite, weak) id<RAPageCollectionViewCellDelegate> delegate;
 
 @property (nonatomic, readwrite, weak) UIViewController *parentViewController;
 @property (nonatomic, readwrite, weak) UIViewController *childViewController;

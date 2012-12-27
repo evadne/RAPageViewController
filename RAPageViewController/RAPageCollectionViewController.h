@@ -16,4 +16,7 @@
 @property (nonatomic, readonly, strong) UICollectionView *collectionView;
 @property (nonatomic, readonly, strong) UICollectionViewFlowLayout *collectionViewLayout;
 
+@property (nonatomic, readwrite, assign) CGFloat displayIndex;	//	if no pages, it’ll be NAN, use isnan()
+- (void) setDisplayIndex:(CGFloat)displayIndex animated:(BOOL)animate completion:(void(^)(void))completionBlock;
+
 @end

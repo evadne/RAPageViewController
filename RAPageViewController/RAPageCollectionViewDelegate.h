@@ -14,4 +14,7 @@
 - (void) pageCollectionView:(RAPageCollectionView *)pageCollectionView willChangeFromFrame:(CGRect)fromBounds toFrame:(CGRect)toBounds;
 - (void) pageCollectionView:(RAPageCollectionView *)pageCollectionView didChangeFromFrame:(CGRect)fromBounds toFrame:(CGRect)toBounds;
 
+- (void) pageCollectionViewWillLayout:(RAPageCollectionView *)pageCollectionView;
+- (void) pageCollectionViewDidLayout:(RAPageCollectionView *)pageCollectionView;
+
 @end

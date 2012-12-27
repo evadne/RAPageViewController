@@ -24,4 +24,14 @@
 	
 }
 
+- (void) layoutSubviews {
+
+	[self.delegate pageCollectionViewWillLayout:self];
+	
+	[super layoutSubviews];
+	
+	[self.delegate pageCollectionViewDidLayout:self];
+
+}
+
 @end
