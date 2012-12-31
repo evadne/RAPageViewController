@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "RAPageCollectionViewControllerDelegate.h"
 
-@interface RAPageCollectionViewController : UIViewController
+@interface RAPageCollectionViewController : UIViewController <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, readwrite, weak) id<RAPageCollectionViewControllerDelegate> delegate;
 

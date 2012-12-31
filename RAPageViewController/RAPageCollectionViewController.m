@@ -16,7 +16,7 @@
 
 static NSString * const RAPageCollectionViewDidEndScrollAnimationNotification = @"RAPageCollectionViewDidEndScrollAnimationNotification";
 
-@interface RAPageCollectionViewController () <RAPageCollectionViewCellDelegate, RAPageCollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface RAPageCollectionViewController () <RAPageCollectionViewCellDelegate, RAPageCollectionViewDelegate>
 
 @property (nonatomic, readwrite, strong) NSIndexPath *lastIndexPath;
 @property (nonatomic, readonly, strong) NSOperationQueue *animationQueue;
