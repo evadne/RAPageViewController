@@ -292,6 +292,20 @@ static NSString * const RAPageCollectionViewDidEndScrollAnimationNotification = 
 	
 }
 
+- (void) viewWillLayoutSubviews {
+
+	[super viewWillLayoutSubviews];
+	
+	UICollectionViewFlowLayout *layout = self.collectionViewLayout;
+	
+	self.collectionView.frame = CGRectInset(
+		self.view.bounds,
+		-0.5f * layout.minimumLineSpacing,
+		-0.5f * layout.minimumLineSpacing
+	);
+
+}
+
 - (void) pageCollectionViewDidLayout:(RAPageCollectionView *)pageCollectionView {
 
 	//	no op
