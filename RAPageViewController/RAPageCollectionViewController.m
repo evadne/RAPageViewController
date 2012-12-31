@@ -73,6 +73,9 @@ static NSString * const RAPageCollectionViewDidEndScrollAnimationNotification = 
 
 	if (!_collectionView) {
 	
+		if (![self isViewLoaded])
+			return nil;
+	
 		UICollectionViewFlowLayout *layout = self.collectionViewLayout;
 		CGRect frame = CGRectInset(
 			self.view.bounds,
