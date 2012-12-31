@@ -35,7 +35,7 @@ static NSString * const RAPageCollectionViewDidEndScrollAnimationNotification = 
 
 }
 
-+ (Class) collectionViewCellReuseIdentifier {
++ (NSString *) collectionViewCellReuseIdentifier {
 
 	return @"Cell";
 

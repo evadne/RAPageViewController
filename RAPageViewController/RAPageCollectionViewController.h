@@ -20,6 +20,6 @@
 - (void) setDisplayIndex:(CGFloat)displayIndex animated:(BOOL)animate completion:(void(^)(void))completionBlock;
 
 + (Class) collectionViewCellClass;
-+ (Class) collectionViewCellReuseIdentifier;
++ (NSString *) collectionViewCellReuseIdentifier;
 
 @end
