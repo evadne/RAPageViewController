@@ -19,4 +19,7 @@
 @property (nonatomic, readwrite, assign) CGFloat displayIndex;	//	if no pages, it’ll be NAN, use isnan()
 - (void) setDisplayIndex:(CGFloat)displayIndex animated:(BOOL)animate completion:(void(^)(void))completionBlock;
 
++ (Class) collectionViewCellClass;
++ (Class) collectionViewCellReuseIdentifier;
+
 @end

@@ -29,6 +29,18 @@ static NSString * const RAPageCollectionViewDidEndScrollAnimationNotification = 
 @synthesize lastIndexPath = _lastIndexPath;
 @synthesize animationQueue = _animationQueue;
 
++ (Class) collectionViewCellClass {
+
+	return [RAPageCollectionViewCell class];
+
+}
+
++ (Class) collectionViewCellReuseIdentifier {
+
+	return @"Cell";
+
+}
+
 - (void) viewDidLoad {
 	
 	[super viewDidLoad];
@@ -53,7 +65,7 @@ static NSString * const RAPageCollectionViewDidEndScrollAnimationNotification = 
 
 - (UICollectionViewCell *) collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
 
-	NSString * const identifier = @"Cell";
+	NSString * const identifier = [[self class] collectionViewCellReuseIdentifier];
 	RAPageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
 	
 	cell.backgroundColor = [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:0.5f + 0.5f * ((float)indexPath.item / 256.0f)];
@@ -96,7 +108,7 @@ static NSString * const RAPageCollectionViewDidEndScrollAnimationNotification = 
 		_collectionView.alwaysBounceHorizontal = (layout.scrollDirection == UICollectionViewScrollDirectionHorizontal);
 		_collectionView.alwaysBounceVertical = (layout.scrollDirection == UICollectionViewScrollDirectionVertical);
 				
-		[_collectionView registerClass:[RAPageCollectionViewCell class] forCellWithReuseIdentifier:@"Cell"];
+		[_collectionView registerClass:[[self class] collectionViewCellClass] forCellWithReuseIdentifier:[[self class] collectionViewCellReuseIdentifier]];
 		
 		[_collectionView registerClass:[RAPageCollectionViewSpacer class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:@"Spacer"];
 		
@@ -125,7 +137,7 @@ static NSString * const RAPageCollectionViewDidEndScrollAnimationNotification = 
 
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+- (void) collectionView:(UICollectionView *)collectionView didEndDisplayingCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
 
 	if ([cell isKindOfClass:[RAPageCollectionViewCell class]]) {
 	
@@ -288,7 +300,7 @@ static NSString * const RAPageCollectionViewDidEndScrollAnimationNotification = 
 - (void) pageCollectionViewWillLayout:(RAPageCollectionView *)pageCollectionView {
 
 	//	no op
-	
+		
 }
 
 - (CGFloat) displayIndexFromCurrentState {
