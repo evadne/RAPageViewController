@@ -65,9 +65,6 @@ static NSString * const RAPageCollectionViewDidEndScrollAnimationNotification = 
 	
 	cell.childViewController = ([viewController isViewLoaded] && (viewController.view.superview == self.view)) ? nil : viewController;
 	
-	cell.layer.borderColor = [UIColor redColor].CGColor;
-	cell.layer.borderWidth = 2.0f;
-	
 	return cell;
 
 }
