@@ -107,6 +107,9 @@ static NSString * const RAPageCollectionViewDidEndScrollAnimationNotification = 
 		
 		_collectionView.alwaysBounceHorizontal = (layout.scrollDirection == UICollectionViewScrollDirectionHorizontal);
 		_collectionView.alwaysBounceVertical = (layout.scrollDirection == UICollectionViewScrollDirectionVertical);
+		
+		_collectionView.showsHorizontalScrollIndicator = NO;
+		_collectionView.showsVerticalScrollIndicator = NO;
 				
 		[_collectionView registerClass:[[self class] collectionViewCellClass] forCellWithReuseIdentifier:[[self class] collectionViewCellReuseIdentifier]];
 		
