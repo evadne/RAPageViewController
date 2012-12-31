@@ -68,8 +68,6 @@ static NSString * const RAPageCollectionViewDidEndScrollAnimationNotification = 
 	NSString * const identifier = [[self class] collectionViewCellReuseIdentifier];
 	RAPageCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
 	
-	cell.backgroundColor = [UIColor colorWithRed:0.5f green:0.5f blue:0.5f alpha:0.5f + 0.5f * ((float)indexPath.item / 256.0f)];
-	
 	UIViewController *viewController = [self.delegate viewControllerForPageAtIndex:indexPath.item inPageCollectionViewController:self];
 	
 	cell.delegate = self;
