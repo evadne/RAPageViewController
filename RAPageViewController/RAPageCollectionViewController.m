@@ -14,6 +14,8 @@
 #import "RAPageCollectionViewSpacer.h"
 #import "RADeferredOperation.h"
 
+static NSString * const RAPageCollectionViewDidEndScrollAnimationNotification = @"RAPageCollectionViewDidEndScrollAnimationNotification";
+
 @interface RAPageCollectionViewController () <RAPageCollectionViewCellDelegate, RAPageCollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, readwrite, strong) NSIndexPath *lastIndexPath;
@@ -365,6 +367,12 @@
 
 }
 
+- (void) scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+
+	[[NSNotificationCenter defaultCenter] postNotificationName:RAPageCollectionViewDidEndScrollAnimationNotification object:scrollView];
+
+}
+
 - (void) captureLastIndexPath {
 
 	self.lastIndexPath = [self centermostElementAttributesInRect:self.collectionView.bounds].indexPath;
@@ -414,17 +422,26 @@
 	}
 	
 	if (animate) {
-
+		
 		[UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionLayoutSubviews animations:^{
+			
+			UICollectionView *collectionView = self.collectionView;
+			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+			
+			__block __unsafe_unretained id observer = [notificationCenter addObserverForName:RAPageCollectionViewDidEndScrollAnimationNotification object:collectionView queue:nil usingBlock:^(NSNotification *note) {
+				
+				NSCParameterAssert(observer);
+				
+				if (completionBlock)
+					completionBlock();
+				
+				[notificationCenter removeObserver:observer];
+				
+			}];
 			
 			[self.collectionView setContentOffset:toContentOffset animated:YES];
 			
-		} completion:^(BOOL finished) {
-
-			if (completionBlock)
-				completionBlock();
-			
-		}];
+		} completion:nil];
 	
 	} else {
 	
