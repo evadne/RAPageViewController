@@ -453,7 +453,7 @@ static NSString * const RAPageCollectionViewDidEndScrollAnimationNotification = 
 		[UIView animateWithDuration:0.3f delay:0.0f options:UIViewAnimationOptionLayoutSubviews animations:^{
 			
 			UICollectionView *collectionView = self.collectionView;
-			NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+			__weak NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
 			
 			__block __unsafe_unretained id observer = [notificationCenter addObserverForName:RAPageCollectionViewDidEndScrollAnimationNotification object:collectionView queue:nil usingBlock:^(NSNotification *note) {
 				
