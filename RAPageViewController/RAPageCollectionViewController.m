@@ -333,6 +333,9 @@ static NSString * const RAPageCollectionViewDidEndScrollAnimationNotification = 
 		CGPoint contentOffset = pageCollectionView.contentOffset;
 		
 		CALayer *presentationLayer = [pageCollectionView.layer presentationLayer];
+		if (!presentationLayer)
+			presentationLayer = pageCollectionView.layer;
+		
 		CGRect presentationBounds = presentationLayer.bounds;
 		
 		CGPoint elementCenter = element.center;
