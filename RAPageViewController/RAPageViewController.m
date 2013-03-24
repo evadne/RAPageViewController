@@ -149,11 +149,8 @@
 	}];
 	
 	UIViewController * const previousPVC = self.previousPageViewController;
-    [self setScrollsToTop:NO forTableViewInViewController:previousPVC];
 	UIViewController * const currentPVC = self.currentPageViewController;
-    [self setScrollsToTop:YES forTableViewInViewController:previousPVC];
 	UIViewController * const nextPVC = self.nextPageViewController;
-    [self setScrollsToTop:NO forTableViewInViewController:previousPVC];
 	
 	if (!!previousPVC && !!currentPVC)
 		NSCParameterAssert(previousPVC != currentPVC);
@@ -212,15 +209,6 @@
 	if (!UIEdgeInsetsEqualToEdgeInsets(sv.contentInset, contentInset)) {
 		[sv setContentInset:contentInset];
 	}
-- (void)setScrollsToTop:(BOOL)shouldScrollTopTop forTableViewInViewController:(UIViewController*)viewController {
-    if ([viewController.view isKindOfClass:[UITableView class]]) {
-        ((UITableView*)viewController.view).scrollsToTop = shouldScrollTopTop;
-    }
-    if ([viewController isKindOfClass:[UINavigationController class]]) {
-        viewController = ((UINavigationController*)viewController).topViewController;
-        [self setScrollsToTop:shouldScrollTopTop forTableViewInViewController:viewController];
-    }
-}
 
 }
 
