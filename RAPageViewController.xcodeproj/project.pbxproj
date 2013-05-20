@@ -1,0 +1,303 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FF1F70881689663F008F1BCC /* RAPageCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1F70871689663F008F1BCC /* RAPageCollectionViewController.m */; };
+		FF1F70A21689918B008F1BCC /* RAPageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1F70A11689918B008F1BCC /* RAPageCollectionViewCell.m */; };
+		FF1F70A6168999BB008F1BCC /* RAPageCollectionViewSpacer.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1F70A5168999BB008F1BCC /* RAPageCollectionViewSpacer.m */; };
+		FF1F70A916899C57008F1BCC /* RAPageCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1F70A816899C57008F1BCC /* RAPageCollectionViewFlowLayout.m */; };
+		FF3E9101168C62B2007FB663 /* RADeferredOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = FF3E9100168C62B2007FB663 /* RADeferredOperation.m */; };
+		FF5609D01689C3FE008329B2 /* RAPageCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF5609CF1689C3FE008329B2 /* RAPageCollectionView.m */; };
+		FF7C60DC15B1E28F00D3F3AF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF7C60DB15B1E28F00D3F3AF /* Foundation.framework */; };
+		FF7C60E115B1E28F00D3F3AF /* RAPageViewController.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = FF7C60E015B1E28F00D3F3AF /* RAPageViewController.h */; };
+		FF7C60E315B1E28F00D3F3AF /* RAPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7C60E215B1E28F00D3F3AF /* RAPageViewController.m */; };
+		FF7C60EA15B1E2A700D3F3AF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF7C60E915B1E2A700D3F3AF /* UIKit.framework */; };
+		FF7C60EC15B1E2AC00D3F3AF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF7C60EB15B1E2AC00D3F3AF /* QuartzCore.framework */; };
+		FF7C612C15B1E47500D3F3AF /* RAPageViewControllerScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7C612B15B1E47500D3F3AF /* RAPageViewControllerScrollView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		FF7C60D615B1E28F00D3F3AF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+				FF7C60E115B1E28F00D3F3AF /* RAPageViewController.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		FF1F70861689663F008F1BCC /* RAPageCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAPageCollectionViewController.h; path = RAPageViewController/RAPageCollectionViewController.h; sourceTree = "<group>"; };
+		FF1F70871689663F008F1BCC /* RAPageCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RAPageCollectionViewController.m; path = RAPageViewController/RAPageCollectionViewController.m; sourceTree = "<group>"; };
+		FF1F708A16896689008F1BCC /* RAPageCollectionViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RAPageCollectionViewControllerDelegate.h; path = RAPageViewController/RAPageCollectionViewControllerDelegate.h; sourceTree = "<group>"; };
+		FF1F70A01689918B008F1BCC /* RAPageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAPageCollectionViewCell.h; path = RAPageViewController/RAPageCollectionViewCell.h; sourceTree = "<group>"; };
+		FF1F70A11689918B008F1BCC /* RAPageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RAPageCollectionViewCell.m; path = RAPageViewController/RAPageCollectionViewCell.m; sourceTree = "<group>"; };
+		FF1F70A4168999BB008F1BCC /* RAPageCollectionViewSpacer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAPageCollectionViewSpacer.h; path = RAPageViewController/RAPageCollectionViewSpacer.h; sourceTree = "<group>"; };
+		FF1F70A5168999BB008F1BCC /* RAPageCollectionViewSpacer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RAPageCollectionViewSpacer.m; path = RAPageViewController/RAPageCollectionViewSpacer.m; sourceTree = "<group>"; };
+		FF1F70A716899C57008F1BCC /* RAPageCollectionViewFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAPageCollectionViewFlowLayout.h; path = RAPageViewController/RAPageCollectionViewFlowLayout.h; sourceTree = "<group>"; };
+		FF1F70A816899C57008F1BCC /* RAPageCollectionViewFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RAPageCollectionViewFlowLayout.m; path = RAPageViewController/RAPageCollectionViewFlowLayout.m; sourceTree = "<group>"; };
+		FF217F95168C318000F3883B /* RAPageCollectionViewCellDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RAPageCollectionViewCellDelegate.h; path = RAPageViewController/RAPageCollectionViewCellDelegate.h; sourceTree = "<group>"; };
+		FF3E90FF168C62B2007FB663 /* RADeferredOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RADeferredOperation.h; path = RAPageViewController/RADeferredOperation.h; sourceTree = "<group>"; };
+		FF3E9100168C62B2007FB663 /* RADeferredOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RADeferredOperation.m; path = RAPageViewController/RADeferredOperation.m; sourceTree = "<group>"; };
+		FF5609CE1689C3FE008329B2 /* RAPageCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAPageCollectionView.h; path = RAPageViewController/RAPageCollectionView.h; sourceTree = "<group>"; };
+		FF5609CF1689C3FE008329B2 /* RAPageCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RAPageCollectionView.m; path = RAPageViewController/RAPageCollectionView.m; sourceTree = "<group>"; };
+		FF5609D11689C91D008329B2 /* RAPageCollectionViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RAPageCollectionViewDelegate.h; path = RAPageViewController/RAPageCollectionViewDelegate.h; sourceTree = "<group>"; };
+		FF7C60D815B1E28F00D3F3AF /* libRAPageViewController.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRAPageViewController.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF7C60DB15B1E28F00D3F3AF /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		FF7C60DF15B1E28F00D3F3AF /* RAPageViewController-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RAPageViewController-Prefix.pch"; sourceTree = "<group>"; };
+		FF7C60E015B1E28F00D3F3AF /* RAPageViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RAPageViewController.h; path = RAPageViewController/RAPageViewController.h; sourceTree = "<group>"; };
+		FF7C60E215B1E28F00D3F3AF /* RAPageViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = RAPageViewController.m; path = RAPageViewController/RAPageViewController.m; sourceTree = "<group>"; };
+		FF7C60E915B1E2A700D3F3AF /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		FF7C60EB15B1E2AC00D3F3AF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		FF7C612A15B1E47500D3F3AF /* RAPageViewControllerScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RAPageViewControllerScrollView.h; path = RAPageViewController/RAPageViewControllerScrollView.h; sourceTree = "<group>"; };
+		FF7C612B15B1E47500D3F3AF /* RAPageViewControllerScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RAPageViewControllerScrollView.m; path = RAPageViewController/RAPageViewControllerScrollView.m; sourceTree = "<group>"; };
+		FF7C612E15B1E48B00D3F3AF /* RAPageViewControllerScrollViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RAPageViewControllerScrollViewDelegate.h; path = RAPageViewController/RAPageViewControllerScrollViewDelegate.h; sourceTree = "<group>"; };
+		FF7C612F15B1E5F500D3F3AF /* RAPageViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RAPageViewControllerDelegate.h; path = RAPageViewController/RAPageViewControllerDelegate.h; sourceTree = "<group>"; };
+		FF7C613E15B20EDD00D3F3AF /* RAPageViewControllerSubclass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RAPageViewControllerSubclass.h; path = RAPageViewController/RAPageViewControllerSubclass.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FF7C60D515B1E28F00D3F3AF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF7C60DC15B1E28F00D3F3AF /* Foundation.framework in Frameworks */,
+				FF7C60EC15B1E2AC00D3F3AF /* QuartzCore.framework in Frameworks */,
+				FF7C60EA15B1E2A700D3F3AF /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FF7C60CD15B1E28F00D3F3AF = {
+			isa = PBXGroup;
+			children = (
+				FF7C60E015B1E28F00D3F3AF /* RAPageViewController.h */,
+				FF7C60E215B1E28F00D3F3AF /* RAPageViewController.m */,
+				FF7C613E15B20EDD00D3F3AF /* RAPageViewControllerSubclass.h */,
+				FF7C612F15B1E5F500D3F3AF /* RAPageViewControllerDelegate.h */,
+				FF7C612A15B1E47500D3F3AF /* RAPageViewControllerScrollView.h */,
+				FF7C612B15B1E47500D3F3AF /* RAPageViewControllerScrollView.m */,
+				FF7C612E15B1E48B00D3F3AF /* RAPageViewControllerScrollViewDelegate.h */,
+				FF1F70861689663F008F1BCC /* RAPageCollectionViewController.h */,
+				FF1F70871689663F008F1BCC /* RAPageCollectionViewController.m */,
+				FF1F708A16896689008F1BCC /* RAPageCollectionViewControllerDelegate.h */,
+				FF5609CE1689C3FE008329B2 /* RAPageCollectionView.h */,
+				FF5609CF1689C3FE008329B2 /* RAPageCollectionView.m */,
+				FF5609D11689C91D008329B2 /* RAPageCollectionViewDelegate.h */,
+				FF1F70A01689918B008F1BCC /* RAPageCollectionViewCell.h */,
+				FF1F70A11689918B008F1BCC /* RAPageCollectionViewCell.m */,
+				FF217F95168C318000F3883B /* RAPageCollectionViewCellDelegate.h */,
+				FF1F70A4168999BB008F1BCC /* RAPageCollectionViewSpacer.h */,
+				FF1F70A5168999BB008F1BCC /* RAPageCollectionViewSpacer.m */,
+				FF1F70A716899C57008F1BCC /* RAPageCollectionViewFlowLayout.h */,
+				FF1F70A816899C57008F1BCC /* RAPageCollectionViewFlowLayout.m */,
+				FF3E90FF168C62B2007FB663 /* RADeferredOperation.h */,
+				FF3E9100168C62B2007FB663 /* RADeferredOperation.m */,
+				FF7C60DE15B1E28F00D3F3AF /* Supporting Files */,
+				FF7C60DA15B1E28F00D3F3AF /* Frameworks */,
+				FF7C60D915B1E28F00D3F3AF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FF7C60D915B1E28F00D3F3AF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FF7C60D815B1E28F00D3F3AF /* libRAPageViewController.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FF7C60DA15B1E28F00D3F3AF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FF7C60DB15B1E28F00D3F3AF /* Foundation.framework */,
+				FF7C60EB15B1E2AC00D3F3AF /* QuartzCore.framework */,
+				FF7C60E915B1E2A700D3F3AF /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FF7C60DE15B1E28F00D3F3AF /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FF7C60DF15B1E28F00D3F3AF /* RAPageViewController-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			path = RAPageViewController;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FF7C60D715B1E28F00D3F3AF /* RAPageViewController */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF7C60E615B1E28F00D3F3AF /* Build configuration list for PBXNativeTarget "RAPageViewController" */;
+			buildPhases = (
+				FF7C60D415B1E28F00D3F3AF /* Sources */,
+				FF7C60D515B1E28F00D3F3AF /* Frameworks */,
+				FF7C60D615B1E28F00D3F3AF /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RAPageViewController;
+			productName = RAPageViewController;
+			productReference = FF7C60D815B1E28F00D3F3AF /* libRAPageViewController.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FF7C60CF15B1E28F00D3F3AF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				ORGANIZATIONNAME = Radius;
+			};
+			buildConfigurationList = FF7C60D215B1E28F00D3F3AF /* Build configuration list for PBXProject "RAPageViewController" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = FF7C60CD15B1E28F00D3F3AF;
+			productRefGroup = FF7C60D915B1E28F00D3F3AF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FF7C60D715B1E28F00D3F3AF /* RAPageViewController */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FF7C60D415B1E28F00D3F3AF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF7C60E315B1E28F00D3F3AF /* RAPageViewController.m in Sources */,
+				FF7C612C15B1E47500D3F3AF /* RAPageViewControllerScrollView.m in Sources */,
+				FF1F70881689663F008F1BCC /* RAPageCollectionViewController.m in Sources */,
+				FF1F70A21689918B008F1BCC /* RAPageCollectionViewCell.m in Sources */,
+				FF1F70A6168999BB008F1BCC /* RAPageCollectionViewSpacer.m in Sources */,
+				FF1F70A916899C57008F1BCC /* RAPageCollectionViewFlowLayout.m in Sources */,
+				FF5609D01689C3FE008329B2 /* RAPageCollectionView.m in Sources */,
+				FF3E9101168C62B2007FB663 /* RADeferredOperation.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		FF7C60E415B1E28F00D3F3AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		FF7C60E515B1E28F00D3F3AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FF7C60E715B1E28F00D3F3AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/RAPageViewController.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RAPageViewController/RAPageViewController-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		FF7C60E815B1E28F00D3F3AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/RAPageViewController.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "RAPageViewController/RAPageViewController-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FF7C60D215B1E28F00D3F3AF /* Build configuration list for PBXProject "RAPageViewController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF7C60E415B1E28F00D3F3AF /* Debug */,
+				FF7C60E515B1E28F00D3F3AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF7C60E615B1E28F00D3F3AF /* Build configuration list for PBXNativeTarget "RAPageViewController" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF7C60E715B1E28F00D3F3AF /* Debug */,
+				FF7C60E815B1E28F00D3F3AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FF7C60CF15B1E28F00D3F3AF /* Project object */;
+}
