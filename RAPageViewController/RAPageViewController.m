@@ -28,6 +28,8 @@
 
 	[super viewDidLoad];
 	[self.view addSubview:self.scrollView];
+    
+    _contentOffsetIncrementX = _contentOffsetIncrementY = 0.5f;
 	
 	if (self.viewControllers) {
 		[self.scrollView setContentOffset:(CGPoint){
@@ -239,8 +241,8 @@
 	CGPoint nextPageRectCenter = center(nextPageRect);
 	
 	CGPoint targetContentOffsetCenter = (CGPoint){
-		contentOffset.x + 0.5f * CGRectGetWidth(self.scrollView.frame),
-		contentOffset.y + 0.5f * CGRectGetHeight(self.scrollView.frame),
+		contentOffset.x + _contentOffsetIncrementX * CGRectGetWidth(self.scrollView.frame),
+		contentOffset.y + _contentOffsetIncrementY * CGRectGetHeight(self.scrollView.frame),
 	};
 	
 	CGFloat previousPageRectCenterDistance = distance(previousPageRectCenter, targetContentOffsetCenter);
