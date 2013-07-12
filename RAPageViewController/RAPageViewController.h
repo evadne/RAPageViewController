@@ -16,5 +16,6 @@
 
 @property (nonatomic, readwrite, weak) IBOutlet id<RAPageViewControllerDelegate> delegate;
 @property (nonatomic, readwrite, strong) IBOutletCollection(UIViewController) NSArray *viewControllers;
+@property (nonatomic) CGFloat contentOffsetIncrementX, contentOffsetIncrementY;
 
 @end
