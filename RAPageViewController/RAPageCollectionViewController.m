@@ -433,13 +433,13 @@ static NSString * const RAPageCollectionViewDidEndScrollAnimationNotification = 
 		
 		case UICollectionViewScrollDirectionHorizontal: {
 			pageBreadth = layout.itemSize.width + [self pageSpacing];
-			toContentOffset = (CGPoint) { .x = displayIndex * pageBreadth };
+			toContentOffset = (CGPoint) { .x = displayIndex * pageBreadth, .y = self.collectionView.contentOffset.y };
 			break;
 		}
 		
 		case UICollectionViewScrollDirectionVertical: {
 			pageBreadth = layout.itemSize.height + [self pageSpacing];
-			toContentOffset = (CGPoint) { .y = displayIndex * pageBreadth };
+			toContentOffset = (CGPoint) { .y = displayIndex * pageBreadth, .x = self.collectionView.contentOffset.x };
 			break;
 		}
 		
