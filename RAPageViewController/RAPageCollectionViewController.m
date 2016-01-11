@@ -165,7 +165,7 @@ static NSString * const RAPageCollectionViewDidEndScrollAnimationNotification = 
 	
 	UICollectionView *collectionView = self.collectionView;
 	
-	CGFloat (^distance)(CGPoint, CGPoint) = ^ (CGPoint lhs, CGPoint rhs) {
+	CGFloat (^distance)(CGPoint, CGPoint) = ^CGFloat(CGPoint lhs, CGPoint rhs) {
 		return sqrtf(powf(rhs.x - lhs.x, 2) + powf(rhs.y - lhs.y, 2));
 	};
 	

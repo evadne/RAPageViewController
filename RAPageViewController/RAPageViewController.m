@@ -14,6 +14,7 @@
 @end
 
 @implementation RAPageViewController
+
 @synthesize delegate = _delegate;
 @synthesize scrollView = _scrollView;
 @synthesize currentPageViewController = _currentPageViewController;
@@ -229,7 +230,7 @@
 		};
 	};
 	
-	CGFloat (^distance)(CGPoint, CGPoint) = ^ (CGPoint lhs, CGPoint rhs) {
+	CGFloat (^distance)(CGPoint, CGPoint) = ^CGFloat(CGPoint lhs, CGPoint rhs) {
 		return sqrtf(
 			powf(lhs.x - rhs.x, 2) +
 			powf(lhs.y - rhs.y, 2)
