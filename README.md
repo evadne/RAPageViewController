@@ -48,7 +48,7 @@ There goes:
 For more information, look at the sample app! [RAPVCSCollectionViewController](https://github.com/evadne/RAPageViewController-Sample/blob/develop/RAPageViewController-Sample/RAPVCSCollectionViewController.m) shows sample implementations for several methods that cover the basic operations:
 
 * `rewind`: Move to the first page.
-* `fastForward`: Move the the last page.
+* `fastForward`: Move to the last page.
 * `insertBefore`: Insert a page before the current page.
 * `insertAfter`: Insert a page after the current page.
 * `trash`: Delete the current page.
